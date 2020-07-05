@@ -9,5 +9,9 @@
         <module name="payment-provider-service" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="payment-provider-service" target="1.5" />
+      <module name="springcloud-alibaba2020" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
 </project>
