@@ -9,6 +9,8 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>payment-provider-service</module>
+        <module>order-consumer-service</module>
+        <module>config-service</module>
     </modules>
     <packaging>pom</packaging>
 
