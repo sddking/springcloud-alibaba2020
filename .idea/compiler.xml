@@ -6,16 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="config-service" />
         <module name="order-consumer-service" />
         <module name="payment-provider-service" />
+        <module name="config-service" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="config-service" target="1.5" />
-      <module name="order-consumer-service" target="1.5" />
-      <module name="payment-provider-service" target="1.5" />
-      <module name="springcloud-alibaba2020" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
