@@ -7,10 +7,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="order-consumer-service" />
-        <module name="seata-storage" />
         <module name="payment-provider-service" />
-        <module name="seata-order" />
         <module name="config-service" />
+        <module name="seata-order" />
+        <module name="seata-storage" />
+        <module name="seata-account" />
       </profile>
     </annotationProcessing>
   </component>

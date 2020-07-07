@@ -6,7 +6,7 @@ spring:
   cloud:
     alibaba:
       seata:
-        tx-service-group: default
+        tx-service-group: seata-order-service-seata-service-group
     nacos:
       discovery:
         server-addr: localhost:8848
