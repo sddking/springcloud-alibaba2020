@@ -13,8 +13,18 @@ spring:
       transport:
         dashboard: localhost:8081
         port: 8719
-service-url:
-  nacos-user-service: http://payment-service
+      datasource:
+        ds1:
+          nacos:
+            server-addr: localhost:8848
+            dataId: order-service
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+#激活feign支持sentinel的配置
+feign:
+  sentinel:
+    enabled: true
 management:
   endpoints:
     web:
@@ -23,7 +33,7 @@ management:
 
 #sentinel
 #流控规则
-  #资源名：唯一名称，默认请求路径
+  #资源名：唯一名称，默认请求路径（既可以是Mapping路径，又可以是sentinel Resource的value，当不存在blockHandler，使用自带的Flow Exception）
   #针对来源：Sentinel可以针对调用者进行限流，填写微服务名，默认为default（不区分来源）
   #阈值类型/单机阈值：
      #QPS（每秒钟的请求数量）：当调用该API的QPS达到阈值时，则进行限流
@@ -63,3 +73,37 @@ management:
       #入口QPS  单台机器所有入口流量的QPS达到阈值时触发系统保护
       #CPU的使用率  CPU利用率超过设定的阈值时，则会触发系统保护
 
+
+#注意点
+    #当未做持久化规则处理时，资源服务重启后，限流规则会自动消失，正式环境下 生产规则需要进行持久化配置到Nacos
+       #（1）引入sentinel-datasource-nacos
+       #（2）yml添加sentinel的数据源
+            #datasource:
+            #  ds1:
+            #    nacos:
+            #      server-addr: localhost:8848
+            #      dataId: order-service
+            #      groupId: DEFAULT_GROUP
+            #      data-type: json
+            #      rule-type: flow
+       #（3）添加配置数据到nacos
+            #[
+            #  {
+            #    "resource": "/order/testHotKey",     //资源名称
+            #    "limitApp": "default",               //来源应用
+            #    "grade": 1,                          //阈值类型，0表示线程数,1表示QPS
+            #    "count": 1,                          //单机阈值
+            #    "strategy": 0,                       //流控模式，0表示直接，1表示关联,2表示链路
+            #    "controlBehavior": 0,                //流控效果，0表示快速失败，1表示Warm Up，2表示排队等待
+            #    "clusterMode": false                 //是否集群
+            #  }
+            #]
+    #默认每个sentinelResource都需要配置blockHandler，耦合性较高，需要创建自定义公共BlockHandler统一处理。
+    #SentinelResource不能用于private方法
+    #Sentinel三个核心的API为
+        #sphU定义资源
+        #Tracer定义统计，线程数、QPS等
+        #ContextUtil定义了上下文
+
+#服务熔断  Sentinel代替Hystrix与Ribbon和OpenFeign整合实现服务熔断和负载。热部署对于Hystrix和Sentinel都不友好。
+         #block限流配置违规异常，fallback为程序运行异常

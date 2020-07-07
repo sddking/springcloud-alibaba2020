@@ -9,11 +9,11 @@ import org.springframework.web.client.RestTemplate;
  * @author 180465
  * @date 2020/7/5 19:11
  */
-@Component
+//@Component
 public class RestTemplateConfig {
-    @Bean
-    @LoadBalanced
-    public RestTemplate getRestTemplate(){
-        return new RestTemplate();
-    }
+//    @Bean
+//    @LoadBalanced
+//    public RestTemplate getRestTemplate(){
+//        return new RestTemplate();
+//    }
 }
