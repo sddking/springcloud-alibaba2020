@@ -5,6 +5,7 @@ import com.seata.order.domain.Order;
 import com.seata.order.service.AccountService;
 import com.seata.order.service.OrderService;
 import com.seata.order.service.StorageService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,11 @@ public class OrderServiceImpl implements OrderService {
     @Resource
     private AccountService accountService;
 
+    /**
+     * name为任意唯一的名称
+     * @param order
+     */
+    @GlobalTransactional(name = "order-create",rollbackFor = Exception.class)
     public void create(Order order) {
         log.info("------>开始新建订单");
         orderDao.create(order);

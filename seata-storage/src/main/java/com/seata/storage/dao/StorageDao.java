@@ -6,5 +6,5 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface StorageDao {
-    void decrease(@Param("productId") Integer productId, @Param("count") Integer count);
+    void decrease(@Param("productId") Long productId, @Param("count") Integer count);
 }

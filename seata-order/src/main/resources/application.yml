@@ -18,8 +18,22 @@ spring:
 feign:
   hystrix:
     enabled: true
+ribbon:
+  MaxAutoRetries: 1 #最大重试次数，当Eureka中可以找到服务，但是服务连不上时将会重试
+  MaxAutoRetriesNextServer: 1 #切换实例的重试次数
+  OkToRetryOnAllOperations: false # 对所有的操作请求都进行重试，如果是get则可以，如果是post,put等操作没有实现幂等的情况下是很危险的，所以设置为false
+  ConnectTimeout: 50000 #请求连接的超时时间
+  ReadTimeout: 50000 #请求处理的超时时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000 #默认为1000ms
 logging:
   level:
     root: info
 mybatis:
   mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.seata.order.domain
